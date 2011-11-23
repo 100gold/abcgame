@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ModuleTests|Win32">
+      <Configuration>ModuleTests</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C77E205F-3C6C-4F0C-A295-2C9D4F209D00}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>abc</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ModuleTests|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ModuleTests|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ModuleTests|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(PUGIXML_INCLUDE);$(OGRE_INCLUDE);$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>import.h</PrecompiledHeaderFile>
+      <AdditionalOptions>-Zm1000 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(PUGIXML_LIB)\x32;$(BOOST_ROOT)\stage\lib;$(OIS_LIB);$(OGRE_LIB)\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreMain_d.lib;OIS_static_d.lib;pugixml_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary>
+      </ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ModuleTests|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>TEST_PROJECT;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(PUGIXML_INCLUDE);$(OGRE_INCLUDE);$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>import.h</PrecompiledHeaderFile>
+      <AdditionalOptions>-Zm1000 %(AdditionalOptions)</AdditionalOptions>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(PUGIXML_LIB)\x32;$(BOOST_ROOT)\stage\lib;$(OIS_LIB);$(OGRE_LIB)\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreMain_d.lib;OIS_static_d.lib;pugixml_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary>
+      </ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(PUGIXML_INCLUDE);$(OGRE_INCLUDE);$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>import.h</PrecompiledHeaderFile>
+      <AdditionalOptions>-Zm1000 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(PUGIXML_LIB)\x32;$(BOOST_ROOT)\stage\lib;$(OIS_LIB);$(OGRE_LIB)\RelWithDebInfo</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreMain.lib;OIS_static.lib;pugixml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary>
+      </ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="baseobject.cpp" />
+    <ClCompile Include="gameobjfactory.cpp" />
+    <ClCompile Include="gamesectorview.cpp" />
+    <ClCompile Include="gameturn.cpp" />
+    <ClCompile Include="gameworld.cpp" />
+    <ClCompile Include="import.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ModuleTests|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="initogrebase.cpp" />
+    <ClCompile Include="localization.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="gamesector.cpp" />
+    <ClCompile Include="staticgameobject.cpp" />
+    <ClCompile Include="testbaseobject.cpp" />
+    <ClCompile Include="testbaseview.cpp" />
+    <ClCompile Include="testeventhandle.cpp" />
+    <ClCompile Include="testgameobjfactory.cpp" />
+    <ClCompile Include="testmain.cpp" />
+    <ClCompile Include="testxmlresource.cpp" />
+    <ClCompile Include="viewableobject.cpp" />
+    <ClCompile Include="xmlresource.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="all.h" />
+    <ClInclude Include="alltests.h" />
+    <ClInclude Include="baseobject.h" />
+    <ClInclude Include="eventhandle.hpp" />
+    <ClInclude Include="exceptions.hpp" />
+    <ClInclude Include="gameobjfactory.h" />
+    <ClInclude Include="gameturn.h" />
+    <ClInclude Include="import.h" />
+    <ClInclude Include="initogrebase.h" />
+    <ClInclude Include="gamesector.h" />
+    <ClInclude Include="gameworld.h" />
+    <ClInclude Include="gamesectorview.h" />
+    <ClInclude Include="localization.h" />
+    <ClInclude Include="staticgameobject.h" />
+    <ClInclude Include="testbaseobjectptr.h" />
+    <ClInclude Include="testgameobjectfixture.hpp" />
+    <ClInclude Include="viewableobject.h" />
+    <ClInclude Include="xmlresource.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

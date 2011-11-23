@@ -1,0 +1,16 @@
+<document>
+	<object type="sun">
+		<name localize="true">The Sun</name>
+		<sector>testsector1.xml</sector>
+	</object>
+	<object type="planet">
+		<name localize="true">Mars</name>
+		<geometry r="200" a="1.5" d="1"/>
+		<sector>testsector1.xml</sector>
+	</object>
+	<object type="planet">
+		<name localize="true">Jupiter</name>
+		<geometry r="500" a="1" d="0"/>
+		<sector>testsector1.xml</sector>
+	</object>
+</document>

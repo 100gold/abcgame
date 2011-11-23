@@ -1,0 +1,6 @@
+<document>
+	<object type="sun">
+		<name localize="true">The sun</name>
+		<sector>testsector1.xml</sector>
+	</object>
+</document>
