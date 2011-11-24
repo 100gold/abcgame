@@ -10,7 +10,8 @@ class TrivialObject : public BaseObject
 {
 	int& m_counter;
 
-	void nextturn(const GameTurn& turn)
+protected:
+	void nextturn(GameTurn& turn)
 	{
 		m_counter++;
 	}

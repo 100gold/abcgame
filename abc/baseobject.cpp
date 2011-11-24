@@ -2,7 +2,7 @@
 #include "all.h"
 
 BaseObject::ObjectList BaseObject::m_objlist;
-BaseObject::EventMgr BaseObject::m_objevents;
+BaseObject::EventMgr EventHiveOwner<BaseObject>::m_objevents;
 
 BaseObject::BaseObject(GameSectorPtr sector) :
 	m_current_sector(sector)
@@ -36,12 +36,7 @@ void BaseObject::set_dead()
 	}
 }
 
-void BaseObject::unsubscribe(EventMgr::EventPtr handle)
-{
-	m_objevents.delete_event(handle);
-}
-
-void BaseObject::nextturn_for_all(const GameTurn& turn)
+void BaseObject::nextturn_for_all(GameTurn& turn)
 {
 	BOOST_FOREACH(BaseObject*x,m_objlist)
 	{

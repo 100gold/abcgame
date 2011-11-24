@@ -7,7 +7,7 @@ GameObjectSun::GameObjectSun(GameSectorPtr sector, const pugi::xml_node& cfg) :
 	m_pos = Ogre::Vector2(0,0);
 }
 
-void GameObjectSun::nextturn(const GameTurn& turn)
+void GameObjectSun::nextturn(GameTurn& turn)
 {
 }
 
@@ -26,7 +26,7 @@ GameObjectPlanet::GameObjectPlanet(GameSectorPtr sector, const pugi::xml_node& c
 	update_position();
 }
 
-void GameObjectPlanet::nextturn(const GameTurn& turn)
+void GameObjectPlanet::nextturn(GameTurn& turn)
 {
 
 }

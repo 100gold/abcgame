@@ -9,7 +9,7 @@ namespace
 class TrivialObject : public ViewableObject
 {
 protected:
-	void nextturn(const GameTurn& turn)
+	void nextturn(GameTurn& turn)
 	{
 
 	}

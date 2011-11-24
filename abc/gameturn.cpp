@@ -1,19 +1,34 @@
 #include "import.h"
 #include "all.h"
 
+GameTurn::EventMgr EventHiveOwner<GameTurn>::m_objevents;
+
+void GameTurn::do_turn(const Ogre::Real& progress_value)
+{
+	if (m_finished)
+	{
+		return;
+	}
+	BOOST_FOREACH(ActionPtr& act, m_actions)
+	{
+		act->execute(progress_value);
+	}
+	m_actions.remove_if([](const ActionPtr& act){
+		return !act->is_active();
+	});
+	if (progress_value >= 1)
+	{
+		m_finished = true;
+		m_objevents.activate(*this);
+	}
+}
+
+void GameTurn::put_action(ActionPtr act)
+{
+	m_actions.push_back(act);
+}
+
 GameTurn::GameTurn()
 {
-	m_number = 1;
-}
-
-GameTurn GameTurn::getnext(const GameTurn& turn)
-{
-	GameTurn result;
-	result.m_number = turn.m_number+1;
-	return result;
-}
-
-GameTurn::operator int()
-{
-	return m_number;
+	m_finished = false;
 }

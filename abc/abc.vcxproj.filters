@@ -43,6 +43,9 @@
     <Filter Include="Header Files\tests">
       <UniqueIdentifier>{2911d0b1-a779-4817-b4aa-eb1cbae06fb8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\actions">
+      <UniqueIdentifier>{4564d085-b3c5-4efe-aba2-ae5160f531e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -102,6 +105,9 @@
     <ClCompile Include="viewableobject.cpp">
       <Filter>Source Files\gfx</Filter>
     </ClCompile>
+    <ClCompile Include="testgameturn.cpp">
+      <Filter>Source Files\tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="all.h">
@@ -157,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="viewableobject.h">
       <Filter>Header Files\gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="baseaction.hpp">
+      <Filter>Header Files\actions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

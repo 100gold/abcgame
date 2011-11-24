@@ -6,6 +6,7 @@
 #include "xmlresource.h"
 #include "localization.h"
 
+#include "baseaction.hpp"
 #include "gameturn.h"
 #include "gamesector.h"
 

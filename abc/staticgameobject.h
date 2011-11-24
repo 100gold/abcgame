@@ -3,7 +3,7 @@
 class GameObjectSun : public ViewableObject
 {
 protected:
-	void nextturn(const GameTurn& turn);
+	void nextturn(GameTurn& turn);
 	void create_entity(Ogre::SceneManager* mgr);
 
 public:
@@ -23,7 +23,7 @@ protected:
 	Ogre::Real m_angle;
 	bool m_clockwise;
 
-	void nextturn(const GameTurn& turn);
+	void nextturn(GameTurn& turn);
 	void create_entity(Ogre::SceneManager* mgr);
 
 public:

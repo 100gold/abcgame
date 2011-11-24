@@ -1,10 +1,16 @@
 #pragma once
 
-class GameTurn
+class GameTurn : public EventHiveOwner<GameTurn>
 {
-	int m_number;
+protected:
+	typedef std::list<ActionPtr> ActionPtrList;
+	ActionPtrList m_actions;
+	bool m_finished;
+
 public:
 	GameTurn();
-	static GameTurn getnext(const GameTurn& turn);
-	operator int();
+	void do_turn(const Ogre::Real& progress_value);
+
+	void put_action(ActionPtr act);
 };
+

@@ -67,6 +67,7 @@
       <AdditionalIncludeDirectories>$(PUGIXML_INCLUDE);$(OGRE_INCLUDE);$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>import.h</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm1000 %(AdditionalOptions)</AdditionalOptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -87,6 +88,7 @@
       <PrecompiledHeaderFile>import.h</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm1000 %(AdditionalOptions)</AdditionalOptions>
       <ExceptionHandling>Async</ExceptionHandling>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -108,6 +110,7 @@
       <AdditionalIncludeDirectories>$(PUGIXML_INCLUDE);$(OGRE_INCLUDE);$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>import.h</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm1000 %(AdditionalOptions)</AdditionalOptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -140,6 +143,7 @@
     <ClCompile Include="testbaseview.cpp" />
     <ClCompile Include="testeventhandle.cpp" />
     <ClCompile Include="testgameobjfactory.cpp" />
+    <ClCompile Include="testgameturn.cpp" />
     <ClCompile Include="testmain.cpp" />
     <ClCompile Include="testxmlresource.cpp" />
     <ClCompile Include="viewableobject.cpp" />
@@ -148,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="all.h" />
     <ClInclude Include="alltests.h" />
+    <ClInclude Include="baseaction.hpp" />
     <ClInclude Include="baseobject.h" />
     <ClInclude Include="eventhandle.hpp" />
     <ClInclude Include="exceptions.hpp" />

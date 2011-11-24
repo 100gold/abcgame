@@ -56,3 +56,24 @@ public:
 		return ptr;
 	}
 };
+
+template<class Owner>
+class EventHiveOwner
+{
+public:
+	typedef EventHive<Owner> EventMgr;
+
+protected:
+	static EventMgr m_objevents;
+
+public:
+	template<class Requestor>
+	static typename EventMgr::EventPtr subscribe(Requestor& req)
+	{
+		return m_objevents.make_new_event(req);
+	}
+	static void unsubscribe(typename EventMgr::EventPtr handle)
+	{
+		m_objevents.delete_event(handle);
+	}
+};

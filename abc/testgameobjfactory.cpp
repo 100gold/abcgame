@@ -8,7 +8,7 @@ namespace
 
 class TrivialObject : public BaseObject
 {
-	void nextturn(const GameTurn& turn)
+	void nextturn(GameTurn& turn)
 	{
 
 	}
