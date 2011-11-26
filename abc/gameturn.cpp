@@ -16,7 +16,7 @@ void GameTurn::do_turn(const Ogre::Real& progress_value)
 	m_actions.remove_if([](const ActionPtr& act){
 		return !act->is_active();
 	});
-	if (progress_value >= 1)
+	if (Math::moreeq(progress_value, 1))
 	{
 		m_finished = true;
 		m_objevents.activate(*this);

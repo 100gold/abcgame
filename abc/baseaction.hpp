@@ -18,6 +18,10 @@ public:
 		if (m_active)
 		{
 			execute_impl(progress_value);
+			if (Math::moreeq(progress_value,1))
+			{
+				m_active = false;
+			}
 		}
 	}
 

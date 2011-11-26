@@ -20,3 +20,8 @@ const Ogre::Vector2& ViewableObject::pos() const
 {
 	return m_pos;
 }
+
+void ViewableObject::refresh_view()
+{
+	m_current_sector->refresh_viewobject(this);
+}

@@ -20,7 +20,7 @@ class GameObjectPlanet : public ViewableObject
 
 protected:
 	Ogre::Real m_radius;
-	Ogre::Real m_angle;
+	Ogre::Radian m_angle;
 	bool m_clockwise;
 
 	void nextturn(GameTurn& turn);

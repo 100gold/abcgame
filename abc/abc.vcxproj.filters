@@ -108,6 +108,9 @@
     <ClCompile Include="testgameturn.cpp">
       <Filter>Source Files\tests</Filter>
     </ClCompile>
+    <ClCompile Include="math.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="all.h">
@@ -166,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="baseaction.hpp">
       <Filter>Header Files\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="math.h">
+      <Filter>Header Files\common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

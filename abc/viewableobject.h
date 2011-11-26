@@ -7,6 +7,7 @@ protected:
 	Ogre::Entity* m_entity;
 
 	virtual void create_entity(Ogre::SceneManager* mgr) = 0;
+	void refresh_view();
 
 public:
 	ViewableObject(GameSectorPtr sector);

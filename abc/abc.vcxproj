@@ -138,6 +138,7 @@
     <ClCompile Include="localization.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="gamesector.cpp" />
+    <ClCompile Include="math.cpp" />
     <ClCompile Include="staticgameobject.cpp" />
     <ClCompile Include="testbaseobject.cpp" />
     <ClCompile Include="testbaseview.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="gameworld.h" />
     <ClInclude Include="gamesectorview.h" />
     <ClInclude Include="localization.h" />
+    <ClInclude Include="math.h" />
     <ClInclude Include="staticgameobject.h" />
     <ClInclude Include="testbaseobjectptr.h" />
     <ClInclude Include="testgameobjectfixture.hpp" />

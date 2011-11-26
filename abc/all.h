@@ -1,6 +1,7 @@
 #pragma once
 
 #include "exceptions.hpp"
+#include "math.h"
 #include "eventhandle.hpp"
 
 #include "xmlresource.h"

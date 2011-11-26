@@ -2,7 +2,7 @@
 
 class GameSectorView;
 class BaseObject;
-
+class ViewableObject;
 
 class GameSector
 {
@@ -28,6 +28,8 @@ public:
 
 	void hide(GameSectorView* view);
 	void show(GameSectorView* view);
+
+	void refresh_viewobject(ViewableObject* object);
 };
 
 typedef boost::shared_ptr<GameSector> GameSectorPtr;

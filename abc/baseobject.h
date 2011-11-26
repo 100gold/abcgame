@@ -8,9 +8,9 @@ class BaseObject : public EventHiveOwner<BaseObject>
 	static BaseObject::ObjectList m_objlist;
 
 	bool m_is_dead;
-	GameSectorPtr m_current_sector;
 
 protected:
+	GameSectorPtr m_current_sector;
 	virtual void nextturn(GameTurn& turn) = 0;
 
 public:

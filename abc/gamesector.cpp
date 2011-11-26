@@ -88,3 +88,19 @@ void GameSector::show(GameSectorView* view)
 		}
 	});
 }
+
+void GameSector::refresh_viewobject(ViewableObject* object)
+{
+	if (NULL == m_game_view)
+	{
+		return;
+	}
+#ifdef _DEBUG
+	auto it = std::find(m_base_objects.begin(), m_base_objects.end(), object);
+	if (it == m_base_objects.end())
+	{
+		throw ESearchItem("viewable object", "m_base_objects on refresh_viewobject");
+	}
+#endif
+	m_game_view->update_object(object);
+}

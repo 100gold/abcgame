@@ -14,8 +14,21 @@ static void work(OgreBase& ogre_base)
 
 		world.fetch_sector("testsector1.xml")->show(&view);
 
+		Ogre::Timer testtimer;
+		GameTurn* turn = new GameTurn();
+		BaseObject::nextturn_for_all(*turn);
+
 		while (1)
 		{
+			if (Math::moreeq(Ogre::Real(testtimer.getMilliseconds())/1000,1))
+			{
+				testtimer.reset();
+				delete turn;
+				turn = new GameTurn();
+				BaseObject::nextturn_for_all(*turn);
+			}
+			turn->do_turn(Ogre::Real(testtimer.getMilliseconds())/1000);
+
 			ogre_base.process_message();
 
 			view.render();

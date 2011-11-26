@@ -12,7 +12,7 @@ class TestAction : public Action
 
 	void execute_impl(const Ogre::Real& progress_value) 
 	{
-		if (progress_value >= m_progress_activate)
+		if (Math::moreeq(progress_value, m_progress_activate))
 		{
 			m_active = false;
 		}
