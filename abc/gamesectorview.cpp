@@ -58,6 +58,9 @@ void GameSectorView::create_camera()
 	m_camera->setPosition(Ogre::Vector3(0,0,1000));
 	m_camera->lookAt(Ogre::Vector3(0,0,-300));
 	m_camera->setNearClipDistance(5);
+
+	m_ogrebase.scene_mgr()->setAmbientLight(Ogre::ColourValue(0.3, 0.3, 0.3));
+	m_ogrebase.scene_mgr()->createLight("CamLight")->setPosition(0, 0, 0);
 }
 
 void GameSectorView::create_viewport()
