@@ -9,9 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Header Files\gfx">
-      <UniqueIdentifier>{a3314ae3-8f38-4b51-af6c-832592b00b7b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\common">
       <UniqueIdentifier>{15dd621c-268d-4732-9bcd-a83ce77a73f3}</UniqueIdentifier>
     </Filter>
@@ -24,9 +21,6 @@
     </Filter>
     <Filter Include="Source Files\common">
       <UniqueIdentifier>{87c2704a-7a4b-4f98-b3b4-5d9409f0c397}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gfx">
-      <UniqueIdentifier>{824e00c7-2938-40e0-a291-6068baea2e30}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\gameobject">
       <UniqueIdentifier>{3c7f0fe7-2940-4a29-842b-829291f9efce}</UniqueIdentifier>
@@ -46,6 +40,15 @@
     <Filter Include="Header Files\actions">
       <UniqueIdentifier>{4564d085-b3c5-4efe-aba2-ae5160f531e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\parameters">
+      <UniqueIdentifier>{79ba47fb-9fb8-4168-857a-5095bc270940}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{824e00c7-2938-40e0-a291-6068baea2e30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\UI">
+      <UniqueIdentifier>{a3314ae3-8f38-4b51-af6c-832592b00b7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -55,7 +58,7 @@
       <Filter>Source Files\common</Filter>
     </ClCompile>
     <ClCompile Include="initogrebase.cpp">
-      <Filter>Source Files\gfx</Filter>
+      <Filter>Source Files\UI</Filter>
     </ClCompile>
     <ClCompile Include="gameturn.cpp">
       <Filter>Source Files\gameobject</Filter>
@@ -79,7 +82,7 @@
       <Filter>Source Files\gameobject</Filter>
     </ClCompile>
     <ClCompile Include="gamesectorview.cpp">
-      <Filter>Source Files\gfx</Filter>
+      <Filter>Source Files\UI</Filter>
     </ClCompile>
     <ClCompile Include="xmlresource.cpp">
       <Filter>Source Files\resource</Filter>
@@ -103,7 +106,7 @@
       <Filter>Source Files\gameobject</Filter>
     </ClCompile>
     <ClCompile Include="viewableobject.cpp">
-      <Filter>Source Files\gfx</Filter>
+      <Filter>Source Files\UI</Filter>
     </ClCompile>
     <ClCompile Include="testgameturn.cpp">
       <Filter>Source Files\tests</Filter>
@@ -111,13 +114,16 @@
     <ClCompile Include="math.cpp">
       <Filter>Source Files\common</Filter>
     </ClCompile>
+    <ClCompile Include="inputgrabber.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="all.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="initogrebase.h">
-      <Filter>Header Files\gfx</Filter>
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
     <ClInclude Include="baseobject.h">
       <Filter>Header Files\gameobject</Filter>
@@ -138,7 +144,7 @@
       <Filter>Header Files\gameobject</Filter>
     </ClInclude>
     <ClInclude Include="gamesectorview.h">
-      <Filter>Header Files\gfx</Filter>
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
     <ClInclude Include="xmlresource.h">
       <Filter>Header Files\resource</Filter>
@@ -165,13 +171,22 @@
       <Filter>Header Files\tests</Filter>
     </ClInclude>
     <ClInclude Include="viewableobject.h">
-      <Filter>Header Files\gfx</Filter>
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
     <ClInclude Include="baseaction.hpp">
       <Filter>Header Files\actions</Filter>
     </ClInclude>
     <ClInclude Include="math.h">
       <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="moveaction.hpp">
+      <Filter>Header Files\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="parametergroups.h">
+      <Filter>Header Files\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="inputgrabber.h">
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

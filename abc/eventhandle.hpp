@@ -57,11 +57,11 @@ public:
 	}
 };
 
-template<class Owner>
+template<class Context>
 class EventHiveOwner
 {
 public:
-	typedef EventHive<Owner> EventMgr;
+	typedef EventHive<Context> EventMgr;
 
 protected:
 	static EventMgr m_objevents;

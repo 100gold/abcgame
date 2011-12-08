@@ -9,6 +9,7 @@ static void work(OgreBase& ogre_base)
 	{
 		XmlResourceManager xml_resmgr;
 		ogre_base.initialise();
+		InputGrabber input_grabber(ogre_base.window());
 		World world(xml_resmgr);
 		GameSectorView view(ogre_base, ogre_base.scene_mgr()->getRootSceneNode());
 
@@ -31,6 +32,7 @@ static void work(OgreBase& ogre_base)
 
 			ogre_base.process_message();
 
+			input_grabber.capture();
 			view.render();
 
 			if (ogre_base.window()->isClosed())

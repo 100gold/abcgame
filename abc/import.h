@@ -10,5 +10,11 @@
 #include <OgreFileSystem.h>
 #include <OgreMath.h>
 
+#include <OISInputManager.h>
+#include <OISException.h>
+#include <OISKeyboard.h>
+#include <OISMouse.h>
+#include <OISEvents.h>
+
 #include <pugiforeach.hpp>
 #include <pugixml.hpp>

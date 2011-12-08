@@ -5,8 +5,24 @@
 
 namespace
 {
-	
-class TestAction : public Action
+
+class TrivialObject : public BaseObject
+{
+protected:
+	void nextturn(GameTurn& turn)
+	{
+
+	}
+
+public:
+	TrivialObject(GameSectorPtr sect) :
+		BaseObject(sect)
+	{
+		  sect->arrive(this);
+	}
+};
+
+class TestAction : public OwnedAction<TrivialObject>
 {
 	Ogre::Real m_progress_activate;
 
@@ -18,7 +34,8 @@ class TestAction : public Action
 		}
 	}
 public:
-	TestAction(Ogre::Real progress_activate)
+	TestAction(Ogre::Real progress_activate, TrivialObject* obj) :
+		OwnedAction(obj)
 	{
 		m_progress_activate = progress_activate;
 	}
@@ -40,13 +57,41 @@ public:
 	}
 };
 
-BOOST_AUTO_TEST_SUITE(gameturn_suite)
+struct GameTurnFixture
+{
+	TestGameObjectFixture::SectorMap m_map;
+	TestGameObjectFixture* m_stor;
+
+	GameTurnFixture()
+	{
+		m_map.insert(TestGameObjectFixture::SectorMap::value_type(
+			"testsector",
+			"<document><displayname>testsector</displayname></document>"
+			));
+		m_stor = new TestGameObjectFixture(m_map);
+	}
+	~GameTurnFixture()
+	{
+		delete m_stor;
+	}
+};
+
+BOOST_FIXTURE_TEST_SUITE(gameturn_suite, GameTurnFixture)
 
 BOOST_AUTO_TEST_CASE(gameturn_test0)
 {
 	TestGameTurn turn;
-	ActionPtr act1(new TestAction(0.5));
-	ActionPtr act2(new TestAction(1));
+	GameSectorPtr sector = m_stor->fetch_sector("testsector");
+	TestObjectPtr<TrivialObject> owner1 = new TrivialObject(sector);
+	ActionPtr act1(new TestAction(0.5, owner1));
+	TestObjectPtr<TrivialObject> owner2 = new TrivialObject(sector);
+	ActionPtr act2(new TestAction(1,owner2));
+
+	BOOST_CHECK(act1->is_owned_by(owner1));
+	BOOST_CHECK(!act1->is_owned_by(owner2));
+	BOOST_CHECK(act2->is_owned_by(owner2));
+	BOOST_CHECK(!act2->is_owned_by(owner1));
+
 	turn.put_action(act1);
 	turn.put_action(act2);
 

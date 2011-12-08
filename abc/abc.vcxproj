@@ -64,7 +64,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(PUGIXML_INCLUDE);$(OGRE_INCLUDE);$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(PUGIXML_INCLUDE);$(OGRE_INCLUDE);$(BOOST_ROOT);$(OIS_ROOT)\includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>import.h</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm1000 %(AdditionalOptions)</AdditionalOptions>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -84,7 +84,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>TEST_PROJECT;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(PUGIXML_INCLUDE);$(OGRE_INCLUDE);$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(PUGIXML_INCLUDE);$(OGRE_INCLUDE);$(BOOST_ROOT);$(OIS_ROOT)\includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>import.h</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm1000 %(AdditionalOptions)</AdditionalOptions>
       <ExceptionHandling>Async</ExceptionHandling>
@@ -107,7 +107,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(PUGIXML_INCLUDE);$(OGRE_INCLUDE);$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(PUGIXML_INCLUDE);$(OGRE_INCLUDE);$(BOOST_ROOT);$(OIS_ROOT)\includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>import.h</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm1000 %(AdditionalOptions)</AdditionalOptions>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -135,6 +135,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="initogrebase.cpp" />
+    <ClCompile Include="inputgrabber.cpp" />
     <ClCompile Include="localization.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="gamesector.cpp" />
@@ -164,8 +165,11 @@
     <ClInclude Include="gamesector.h" />
     <ClInclude Include="gameworld.h" />
     <ClInclude Include="gamesectorview.h" />
+    <ClInclude Include="inputgrabber.h" />
     <ClInclude Include="localization.h" />
     <ClInclude Include="math.h" />
+    <ClInclude Include="moveaction.hpp" />
+    <ClInclude Include="parametergroups.h" />
     <ClInclude Include="staticgameobject.h" />
     <ClInclude Include="testbaseobjectptr.h" />
     <ClInclude Include="testgameobjectfixture.hpp" />

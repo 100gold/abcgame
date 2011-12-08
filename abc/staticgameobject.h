@@ -14,8 +14,12 @@ public:
 
 AUTOREGISTER_GAMEOBJECT(GameObjectSun);
 
+class PlanetMove;
+
 class GameObjectPlanet : public ViewableObject
 {
+	friend PlanetMove;
+
 	void update_position();
 
 protected:

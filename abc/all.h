@@ -3,9 +3,12 @@
 #include "exceptions.hpp"
 #include "math.h"
 #include "eventhandle.hpp"
+#include "parametergroups.h"
 
 #include "xmlresource.h"
 #include "localization.h"
+
+#include "inputgrabber.h"
 
 #include "baseaction.hpp"
 #include "gameturn.h"
@@ -17,6 +20,8 @@
 #include "staticgameobject.h"
 
 #include "gameworld.h"
+
+#include "moveaction.hpp"
 
 #include "initogrebase.h"
 #include "gamesectorview.h"
