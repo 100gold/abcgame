@@ -11,6 +11,11 @@ InputGrabber::InputGrabber(Ogre::RenderWindow* rwin)
 	rwin->getCustomAttribute("WINDOW", &window_handle);
 	window_handle_str << window_handle;
 	pl.insert(std::make_pair(std::string("WINDOW"), window_handle_str.str()));
+#pragma message("fixit! crossplatform problem")
+	pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
+	pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
+	pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
+	pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
 	m_imgr = OIS::InputManager::createInputSystem(pl);
 
 	m_keyboarddev = static_cast<OIS::Keyboard*>(m_imgr->createInputObject(OIS::OISKeyboard, true));

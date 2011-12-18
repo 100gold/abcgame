@@ -7,6 +7,7 @@ class Action
 protected:
 	bool m_active;
 	Ogre::Real m_lastprogress;
+	Ogre::Real m_minimal_progress;
 
 	virtual void execute_impl(const Ogre::Real& progress_value) = 0;
 public:
@@ -14,6 +15,7 @@ public:
 	{
 		m_active = true;
 		m_lastprogress = 0;
+		m_minimal_progress = std::numeric_limits<float>::epsilon();
 	}
 
 	void execute(const Ogre::Real& progress_value)
@@ -24,7 +26,7 @@ public:
 		}
 		
 		Ogre::Real progress_diff = progress_value-m_lastprogress;
-		if (Ogre::Math::RealEqual(progress_diff, 0))
+		if (progress_diff < m_minimal_progress)
 		{
 			return;
 		}

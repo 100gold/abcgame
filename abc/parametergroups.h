@@ -4,7 +4,7 @@
 struct MovementParameterGroup
 {
 	Ogre::Real Am;
-	Ogre::Real rm;
+	Ogre::Real Rm;
 	Ogre::Real Vm;
 	Ogre::Vector2 V;
 };

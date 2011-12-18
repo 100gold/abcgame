@@ -15,6 +15,29 @@ static void work(OgreBase& ogre_base)
 
 		world.fetch_sector("testsector1.xml")->show(&view);
 
+		{
+			MovementParameterGroup paramgroup;
+			paramgroup.V = Ogre::Vector2(0, 0);
+			paramgroup.Vm = 300;
+			paramgroup.Am = 180;
+			paramgroup.Rm = Ogre::Math::PI/4;
+
+			auto sector = world.fetch_sector("testsector1.xml");
+			auto obj = *sector->begin();
+			MoveAction<BaseObject> testact(obj,paramgroup);
+
+			auto mobj = ogre_base.scene_mgr()->createManualObject();
+
+			testact.create_move_plane(mobj, Ogre::ColourValue(0.0f,1.0f,0.0f,0.3f), 0.03f);
+
+			Ogre::String name = "MovePlaneMesh";
+			mobj->convertToMesh(name);
+			Ogre::Entity* lEntity = ogre_base.scene_mgr()->createEntity("MovePlaneMesh");
+			Ogre::SceneNode* lNode = ogre_base.scene_mgr()->getRootSceneNode()->createChildSceneNode();
+			lNode->attachObject(lEntity);
+			lNode->setPosition(0,0,0);
+		}
+
 		Ogre::Timer testtimer;
 		GameTurn* turn = new GameTurn();
 		BaseObject::nextturn_for_all(*turn);
