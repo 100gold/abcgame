@@ -191,5 +191,8 @@
     <ClInclude Include="zindex.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
+    <ClInclude Include="controlkeys.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

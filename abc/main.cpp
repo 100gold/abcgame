@@ -12,6 +12,7 @@ static void work(OgreBase& ogre_base)
 		InputGrabber input_grabber(ogre_base.window());
 		World world(xml_resmgr);
 		GameSectorView view(ogre_base, ogre_base.scene_mgr()->getRootSceneNode());
+		world.listen_input(input_grabber);
 
 		world.fetch_sector("testsector1.xml")->show(&view);
 
@@ -40,10 +41,6 @@ static void work(OgreBase& ogre_base)
 
 		while (1)
 		{
-			if (!world.have_active_turn())
-			{
-				world.new_turn();
-			}
 			world.process_turn();
 			ogre_base.process_message();
 
@@ -53,6 +50,7 @@ static void work(OgreBase& ogre_base)
 			if (ogre_base.window()->isClosed())
 				break;
 		}
+		input_grabber.stop_input();
 	} 
 	catch(std::exception& e) 
 	{

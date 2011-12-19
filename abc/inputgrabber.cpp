@@ -31,6 +31,8 @@ InputGrabber::InputGrabber(Ogre::RenderWindow* rwin)
 
 InputGrabber::~InputGrabber()
 {
+	BOOST_ASSERT(m_mouse_events.empty());
+	BOOST_ASSERT(m_keyboard_events.empty());
 	m_imgr->destroyInputObject(m_keyboarddev);
 	m_imgr->destroyInputObject(m_mousedev);
 	OIS::InputManager::destroyInputSystem(m_imgr);
@@ -105,4 +107,18 @@ void InputGrabber::drop_listener(MouseInputEvent* event)
 void InputGrabber::inject_listener(MouseInputEvent* event)
 {
 	m_mouse_events.push_front(event);
+}
+
+void InputGrabber::stop_input()
+{
+	BOOST_FOREACH(auto evt, m_keyboard_events)
+	{
+		delete evt;
+	}
+	m_keyboard_events.clear();
+	BOOST_FOREACH(auto evt, m_mouse_events)
+	{
+		delete evt;
+	}
+	m_mouse_events.clear();
 }

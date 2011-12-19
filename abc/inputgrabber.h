@@ -14,6 +14,19 @@ class KeyboardSimpleInputEvent : public KeyboardInputEvent
 	}
 };
 
+template<int key>
+class KeyInputEvent : public KeyboardSimpleInputEvent
+{
+	virtual void activate() = 0;
+	void key_released(const OIS::KeyEvent &e)
+	{
+		if (e.key == key)
+		{
+			activate();
+		}
+	}
+};
+
 class MouseInputEvent
 {
 public:
@@ -41,6 +54,7 @@ public:
 	~InputGrabber();
 
 	void capture();
+	void stop_input();
 	void inject_listener(KeyboardInputEvent* event);
 	void inject_listener(MouseInputEvent* event);
 	void drop_listener(KeyboardInputEvent* event);

@@ -67,3 +67,24 @@ bool TurnController::have_active_turn()
 {
 	return NULL != m_active_turn;
 }
+
+void TurnController::listen_input(InputGrabber& input)
+{
+	class NextTurn : public KeyInputEvent<KEY_NEXT_TURN>
+	{
+		TurnController& m_r;
+		void activate()
+		{
+			if (!m_r.have_active_turn())
+			{
+				m_r.new_turn();
+			}
+		}
+	public:
+		NextTurn(TurnController& r) :
+			m_r(r)
+		{
+		}
+	};
+	input.inject_listener(new NextTurn(*this));
+}

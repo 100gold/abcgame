@@ -156,6 +156,7 @@
     <ClInclude Include="alltests.h" />
     <ClInclude Include="baseaction.hpp" />
     <ClInclude Include="baseobject.h" />
+    <ClInclude Include="controlkeys.h" />
     <ClInclude Include="eventhandle.hpp" />
     <ClInclude Include="exceptions.hpp" />
     <ClInclude Include="gameobjfactory.h" />

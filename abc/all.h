@@ -4,6 +4,7 @@
 #include "math.h"
 #include "eventhandle.hpp"
 #include "zindex.h"
+#include "controlkeys.h"
 #include "parametergroups.h"
 
 #include "xmlresource.h"
