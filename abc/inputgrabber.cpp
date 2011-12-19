@@ -1,8 +1,6 @@
 #include "import.h"
 #include "all.h"
 
-InputGrabber::EventMgr EventHiveOwner<InputEvent>::m_objevents;
-
 InputGrabber::InputGrabber(Ogre::RenderWindow* rwin)
 {
 	OIS::ParamList pl;
@@ -46,16 +44,28 @@ void InputGrabber::capture()
 
 bool InputGrabber::keyPressed(const OIS::KeyEvent &e)
 {
+	BOOST_FOREACH(auto evt, m_keyboard_events)
+	{
+		evt->key_pressed(e);
+	}
     return true;
 }
 
 bool InputGrabber::keyReleased(const OIS::KeyEvent &e)
 {
+	BOOST_FOREACH(auto evt, m_keyboard_events)
+	{
+		evt->key_released(e);
+	}
 	return true;
 }
 
 bool InputGrabber::mouseMoved(const OIS::MouseEvent &e)
 {
+	BOOST_FOREACH(auto evt, m_mouse_events)
+	{
+		evt->mouse_moved(e);
+	}
 	return true;
 }
 
@@ -66,5 +76,33 @@ bool InputGrabber::mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id)
 
 bool InputGrabber::mouseReleased(const OIS::MouseEvent &e, OIS::MouseButtonID id)
 {
+	BOOST_FOREACH(auto evt, m_mouse_events)
+	{
+		evt->mouse_clicked(e, id);
+	}
 	return true;
+}
+
+void InputGrabber::inject_listener(KeyboardInputEvent* event)
+{
+	m_keyboard_events.push_front(event);
+}
+
+void InputGrabber::drop_listener(KeyboardInputEvent* event)
+{
+	m_keyboard_events.remove_if([event](KeyboardInputEvent* i){
+		return event==i;
+	});
+}
+
+void InputGrabber::drop_listener(MouseInputEvent* event)
+{
+	m_mouse_events.remove_if([event](MouseInputEvent* i){
+		return event==i;
+	});
+}
+
+void InputGrabber::inject_listener(MouseInputEvent* event)
+{
+	m_mouse_events.push_front(event);
 }
