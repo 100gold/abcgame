@@ -5,6 +5,7 @@ GameObjectSun::GameObjectSun(GameSectorPtr sector, const pugi::xml_node& cfg) :
 	ViewableObject(sector)
 {
 	m_pos = Ogre::Vector2(0,0);
+	m_zindex = ZINDEX_SUN;
 }
 
 void GameObjectSun::nextturn(GameTurn& turn)
@@ -23,6 +24,7 @@ GameObjectPlanet::GameObjectPlanet(GameSectorPtr sector, const pugi::xml_node& c
 	m_radius = geo.attribute("r").as_float();
 	m_angle = geo.attribute("a").as_float();
 	m_clockwise = geo.attribute("d").as_bool();
+	m_zindex = ZINDEX_PLANET;
 	update_position();
 }
 

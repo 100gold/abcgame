@@ -35,7 +35,7 @@ static void work(OgreBase& ogre_base)
 			Ogre::Entity* lEntity = ogre_base.scene_mgr()->createEntity("MovePlaneMesh");
 			Ogre::SceneNode* lNode = ogre_base.scene_mgr()->getRootSceneNode()->createChildSceneNode();
 			lNode->attachObject(lEntity);
-			lNode->setPosition(0,0,0);
+			lNode->setPosition(0,0,ZINDEX_MOVEPLANE);
 		}
 
 		Ogre::Timer testtimer;

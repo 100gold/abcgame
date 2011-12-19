@@ -5,6 +5,7 @@ ViewableObject::ViewableObject(GameSectorPtr sector) :
 	BaseObject(sector)
 {
 	m_entity = NULL;
+	m_zindex = ZINDEX_DEFAULT;
 }
 
 void ViewableObject::attach_entity(Ogre::SceneManager* mgr, Ogre::SceneNode* root)
@@ -24,4 +25,9 @@ const Ogre::Vector2& ViewableObject::pos() const
 void ViewableObject::refresh_view()
 {
 	m_current_sector->refresh_viewobject(this);
+}
+
+const Ogre::Real& ViewableObject::zindex() const
+{
+	return m_zindex;
 }

@@ -3,6 +3,7 @@
 #include "exceptions.hpp"
 #include "math.h"
 #include "eventhandle.hpp"
+#include "zindex.h"
 #include "parametergroups.h"
 
 #include "xmlresource.h"

@@ -34,7 +34,7 @@ void GameSectorView::update_object(ViewableObject* obj)
 		m_visible_objects.insert(std::make_pair(obj,node));
 		it = m_visible_objects.find(obj);
 	}
-	it->second->setPosition(it->first->pos().x, it->first->pos().y, 0);
+	it->second->setPosition(it->first->pos().x, it->first->pos().y,it->first->zindex());
 }
 
 void GameSectorView::remove_object(ViewableObject* obj)

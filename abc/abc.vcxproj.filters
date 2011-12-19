@@ -188,5 +188,8 @@
     <ClInclude Include="inputgrabber.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
+    <ClInclude Include="zindex.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
