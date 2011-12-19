@@ -38,21 +38,13 @@ static void work(OgreBase& ogre_base)
 			lNode->setPosition(0,0,ZINDEX_MOVEPLANE);
 		}
 
-		Ogre::Timer testtimer;
-		GameTurn* turn = new GameTurn();
-		BaseObject::nextturn_for_all(*turn);
-
 		while (1)
 		{
-			if (Math::moreeq(Ogre::Real(testtimer.getMilliseconds())/1000,1))
+			if (!world.have_active_turn())
 			{
-				testtimer.reset();
-				delete turn;
-				turn = new GameTurn();
-				BaseObject::nextturn_for_all(*turn);
+				world.new_turn();
 			}
-			turn->do_turn(Ogre::Real(testtimer.getMilliseconds())/1000);
-
+			world.process_turn();
 			ogre_base.process_message();
 
 			input_grabber.capture();

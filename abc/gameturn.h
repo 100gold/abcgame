@@ -14,3 +14,13 @@ public:
 	void put_action(ActionPtr act);
 };
 
+class TurnController
+{
+	Ogre::Timer m_turn_timer;
+	GameTurn* m_active_turn;
+public:
+	TurnController();
+	void process_turn();
+	void new_turn();
+	bool have_active_turn();
+};

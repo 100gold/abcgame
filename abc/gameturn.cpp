@@ -32,3 +32,38 @@ GameTurn::GameTurn()
 {
 	m_finished = false;
 }
+
+void TurnController::process_turn()
+{
+	if (NULL != m_active_turn)
+	{
+		m_active_turn->do_turn(Ogre::Real(m_turn_timer.getMilliseconds())/1000);
+		if (Math::moreeq(Ogre::Real(m_turn_timer.getMilliseconds())/1000,1))
+		{
+			delete m_active_turn;
+			m_active_turn = NULL;
+		}
+	}
+}
+
+TurnController::TurnController()
+{
+	m_active_turn = NULL;
+}
+
+void TurnController::new_turn()
+{
+	if (NULL != m_active_turn)
+	{
+		throw EInconsistent("new turn before previous completed");
+	}
+
+	m_turn_timer.reset();
+	m_active_turn = new GameTurn();
+	BaseObject::nextturn_for_all(*m_active_turn);
+}
+
+bool TurnController::have_active_turn()
+{
+	return NULL != m_active_turn;
+}

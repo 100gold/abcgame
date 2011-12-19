@@ -2,7 +2,7 @@
 
 class GameSectorView;
 
-class World : public GameSectorStorage
+class World : public GameSectorStorage, public TurnController
 {
 	std::hash_map<std::string, GameSectorPtr> m_sectors;
 
@@ -11,6 +11,7 @@ class World : public GameSectorStorage
 	void load_sectors(XmlResourceManager& xmlmgr);
 	void load_staticobj(XmlResourceManager& xmlmgr);
 public:
+
 	World(XmlResourceManager& xmlmgr);
 	GameSectorPtr fetch_sector(const std::string& name);
 };
