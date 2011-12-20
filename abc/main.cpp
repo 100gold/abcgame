@@ -3,26 +3,61 @@
 
 #ifndef TEST_PROJECT
 
+class TestMovableObject : public BasicMovableObject
+{
+public:
+	TestMovableObject(GameSectorPtr sector) :
+		BasicMovableObject(sector)
+	{
+		sector->arrive(this);
+		m_move_params.V = Ogre::Vector2(100, 0);
+		m_move_params.Vm = 300;
+		m_move_params.Am = 30;
+		m_move_params.Rm = Ogre::Math::PI/4;
+	}
+	void nextturn(GameTurn& turn)
+	{
+	}
+	void create_entity(Ogre::SceneManager* mgr)
+	{
+		m_entity = mgr->createEntity(Ogre::SceneManager::PT_SPHERE);
+	}
+};
+
+class TestSelect : public SelectAction
+{
+	void select(ViewableObject* obj, const Ogre::Vector3& point)
+	{
+		BasicMovableObject* mobj = dynamic_cast<BasicMovableObject*>(obj);
+		if (NULL != mobj)
+		{
+			Ogre::Vector2 pos(point.x, point.y);
+			mobj->abs_move(pos);
+		}
+	}
+};
+
 static void work(OgreBase& ogre_base)
 {
 	try 
 	{
 		XmlResourceManager xml_resmgr;
 		ogre_base.initialise();
-		InputGrabber input_grabber(ogre_base.window());
 		World world(xml_resmgr);
 		GameSectorView view(ogre_base, ogre_base.scene_mgr()->getRootSceneNode());
+
+		InputGrabber input_grabber(ogre_base.window());
+		
 		world.listen_input(input_grabber);
+		view.listen_input(input_grabber);
+		view.set_select_action(SelectActionPtr(new TestSelect()));
 
 		world.fetch_sector("testsector1.xml")->show(&view);
 
+		TestMovableObject* tobj = new TestMovableObject(world.fetch_sector("testsector1.xml"));
+		tobj->move(Ogre::Vector2(200,200));
+		/*
 		{
-			MovementParameterGroup paramgroup;
-			paramgroup.V = Ogre::Vector2(0, 0);
-			paramgroup.Vm = 300;
-			paramgroup.Am = 180;
-			paramgroup.Rm = Ogre::Math::PI/4;
-
 			auto sector = world.fetch_sector("testsector1.xml");
 			auto obj = *sector->begin();
 			MoveAction<BaseObject> testact(obj,paramgroup);
@@ -37,7 +72,7 @@ static void work(OgreBase& ogre_base)
 			Ogre::SceneNode* lNode = ogre_base.scene_mgr()->getRootSceneNode()->createChildSceneNode();
 			lNode->attachObject(lEntity);
 			lNode->setPosition(0,0,ZINDEX_MOVEPLANE);
-		}
+		}*/
 
 		while (1)
 		{

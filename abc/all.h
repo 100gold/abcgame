@@ -20,10 +20,12 @@
 #include "baseobject.h"
 #include "viewableobject.h"
 #include "staticgameobject.h"
+#include "basicmovableobject.h"
 
 #include "gameworld.h"
 
 #include "moveaction.hpp"
 
 #include "initogrebase.h"
+#include "mousetracer.h"
 #include "gamesectorview.h"

@@ -125,6 +125,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="baseobject.cpp" />
+    <ClCompile Include="basicmovableobject.cpp" />
     <ClCompile Include="gameobjfactory.cpp" />
     <ClCompile Include="gamesectorview.cpp" />
     <ClCompile Include="gameturn.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="gamesector.cpp" />
     <ClCompile Include="math.cpp" />
+    <ClCompile Include="mousetracer.cpp" />
     <ClCompile Include="staticgameobject.cpp" />
     <ClCompile Include="testbaseobject.cpp" />
     <ClCompile Include="testbaseview.cpp" />
@@ -156,6 +158,7 @@
     <ClInclude Include="alltests.h" />
     <ClInclude Include="baseaction.hpp" />
     <ClInclude Include="baseobject.h" />
+    <ClInclude Include="basicmovableobject.h" />
     <ClInclude Include="controlkeys.h" />
     <ClInclude Include="eventhandle.hpp" />
     <ClInclude Include="exceptions.hpp" />
@@ -170,6 +173,7 @@
     <ClInclude Include="localization.h" />
     <ClInclude Include="math.h" />
     <ClInclude Include="moveaction.hpp" />
+    <ClInclude Include="mousetracer.h" />
     <ClInclude Include="parametergroups.h" />
     <ClInclude Include="staticgameobject.h" />
     <ClInclude Include="testbaseobjectptr.h" />

@@ -28,7 +28,7 @@ protected:
 
 	void execute_impl(const Ogre::Real& progress_value)
 	{
-		//m_owner->move(m_result_vector*progress_value);
+		m_owner->move(m_result_vector*progress_value);
 	}
 
 public:

@@ -37,8 +37,8 @@ void TurnController::process_turn()
 {
 	if (NULL != m_active_turn)
 	{
-		m_active_turn->do_turn(Ogre::Real(m_turn_timer.getMilliseconds())/1000);
-		if (Math::moreeq(Ogre::Real(m_turn_timer.getMilliseconds())/1000,1))
+		m_active_turn->do_turn(Ogre::Real(m_turn_timer.getMilliseconds())/2000);
+		if (Math::moreeq(Ogre::Real(m_turn_timer.getMilliseconds())/2000,1))
 		{
 			delete m_active_turn;
 			m_active_turn = NULL;

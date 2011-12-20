@@ -5,7 +5,12 @@ ViewableObject::ViewableObject(GameSectorPtr sector) :
 	BaseObject(sector)
 {
 	m_entity = NULL;
+	m_pos = Ogre::Vector2(0,0);
 	m_zindex = ZINDEX_DEFAULT;
+
+	std::stringstream objname;
+	objname << std::hex << this;
+	m_viewable_obj_name = objname.str();
 }
 
 void ViewableObject::attach_entity(Ogre::SceneManager* mgr, Ogre::SceneNode* root)
@@ -30,4 +35,9 @@ void ViewableObject::refresh_view()
 const Ogre::Real& ViewableObject::zindex() const
 {
 	return m_zindex;
+}
+
+const Ogre::String& ViewableObject::viewable_name() const
+{
+	return m_viewable_obj_name;
 }

@@ -111,14 +111,6 @@ void InputGrabber::inject_listener(MouseInputEvent* event)
 
 void InputGrabber::stop_input()
 {
-	BOOST_FOREACH(auto evt, m_keyboard_events)
-	{
-		delete evt;
-	}
 	m_keyboard_events.clear();
-	BOOST_FOREACH(auto evt, m_mouse_events)
-	{
-		delete evt;
-	}
 	m_mouse_events.clear();
 }
