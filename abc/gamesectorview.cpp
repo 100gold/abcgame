@@ -59,6 +59,7 @@ void GameSectorView::create_camera()
 
 	m_ogrebase.scene_mgr()->setAmbientLight(Ogre::ColourValue(0.3, 0.3, 0.3));
 	m_ogrebase.scene_mgr()->createLight("CamLight")->setPosition(0, 0, 0);
+	m_camera->setProjectionType(Ogre::PT_ORTHOGRAPHIC);
 }
 
 void GameSectorView::create_viewport()
@@ -86,5 +87,29 @@ void GameSectorView::listen_input(InputGrabber& input_grabber)
 void GameSectorView::set_select_action(SelectActionPtr act)
 {
 	m_mouse_tracer->set_select_action(act);
+}
+
+void GameSectorView::attach_to_object(ViewableObject* obj, Ogre::ManualObject* ent)
+{
+	BaseObjectMap::iterator it = m_visible_objects.find(obj);
+	if (it == m_visible_objects.end())
+	{
+		throw ENoViewableNode("attach entity to invalid object");
+	}
+
+	it->second->attachObject(ent);
+}
+
+void GameSectorView::detach_from_object(ViewableObject* obj, Ogre::ManualObject* ent)
+{
+	BaseObjectMap::iterator it = m_visible_objects.find(obj);
+	if (it == m_visible_objects.end())
+	{
+		throw ENoViewableNode("detach entity from invalid object");
+	}
+	if (ent != it->second->detachObject(ent->getName()))
+	{
+		throw ENoViewableNode("detach entity, which not attached");
+	}
 }
 

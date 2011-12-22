@@ -13,11 +13,9 @@ void MouseTracer::mouse_clicked(const OIS::MouseEvent &e, OIS::MouseButtonID id)
 		return;
 	}
 
-	Ogre::Vector3 start_point = m_camera->getPosition();
-	start_point.x += e.state.X.abs - e.state.width/2;
-	start_point.y += e.state.height/2 - e.state.Y.abs;
-
-	Ogre::Ray ray(start_point, Ogre::Vector3::NEGATIVE_UNIT_Z);
+	Ogre::Real rx = e.state.X.abs;
+	Ogre::Real ry = e.state.Y.abs;
+	Ogre::Ray ray = m_camera->getCameraToViewportRay(rx/e.state.width, ry/e.state.height);
 	m_ray_query->setRay(ray);
 	auto result = m_ray_query->execute();
 
@@ -45,7 +43,7 @@ void MouseTracer::mouse_clicked(const OIS::MouseEvent &e, OIS::MouseButtonID id)
 
 		if (event != m_registred_events.end())
 		{
-			m_select_action->select(event->second, start_point + it->distance*Ogre::Vector3::NEGATIVE_UNIT_Z);
+			m_select_action->select(event->second, ray.getOrigin() + ray.getDirection().normalisedCopy()*it->distance);
 			break;
 		}
 	}

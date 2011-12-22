@@ -1,5 +1,7 @@
 #pragma once
 
+class ViewableObject;
+
 class SelectAction
 {
 public:

@@ -1,5 +1,7 @@
 #pragma once
 
+class ViewableObject;
+
 class GameSectorView
 {
 public:
@@ -23,8 +25,13 @@ public:
 	void remove_object(ViewableObject* obj);
 	Ogre::String get_object_name(ViewableObject* obj);
 
+	void attach_to_object(ViewableObject* obj, Ogre::ManualObject* ent);
+	void detach_from_object(ViewableObject* obj, Ogre::ManualObject* ent);
+
 	void render();
 
 	void listen_input(InputGrabber& input_grabber);
 	void set_select_action(SelectActionPtr act);
 };
+
+typedef boost::shared_ptr<GameSectorView> GameSectorViewPtr;

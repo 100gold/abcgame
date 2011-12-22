@@ -51,3 +51,12 @@ public:
 		m_what = msg;
 	}
 };
+
+class ENoViewableNode : public ERootException
+{
+public:
+	ENoViewableNode(const char* msg)
+	{
+		m_what = msg;
+	}
+};

@@ -49,6 +49,9 @@
     <Filter Include="Header Files\UI">
       <UniqueIdentifier>{a3314ae3-8f38-4b51-af6c-832592b00b7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\actions">
+      <UniqueIdentifier>{737870b3-bc54-42a1-af30-e1edd2bc7add}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -123,6 +126,15 @@
     <ClCompile Include="mousetracer.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
+    <ClCompile Include="movecontroller.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="moveaction.cpp">
+      <Filter>Source Files\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="utl.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="all.h">
@@ -185,9 +197,6 @@
     <ClInclude Include="math.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
-    <ClInclude Include="moveaction.hpp">
-      <Filter>Header Files\actions</Filter>
-    </ClInclude>
     <ClInclude Include="parametergroups.h">
       <Filter>Header Files\parameters</Filter>
     </ClInclude>
@@ -205,6 +214,15 @@
     </ClInclude>
     <ClInclude Include="mousetracer.h">
       <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="movecontroller.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="moveaction.h">
+      <Filter>Header Files\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="utl.h">
+      <Filter>Header Files\common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,6 +10,10 @@ protected:
 	Ogre::Real m_minimal_progress;
 
 	virtual void execute_impl(const Ogre::Real& progress_value) = 0;
+	virtual void finalizate()
+	{
+	};
+
 public:
 	Action()
 	{
@@ -36,6 +40,7 @@ public:
 		if (Math::moreeq(progress_value, 1))
 		{
 			m_active = false;
+			finalizate();
 		}
 	}
 

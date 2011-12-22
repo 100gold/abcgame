@@ -1,6 +1,5 @@
 #pragma once
 
-class GameSectorView;
 class BaseObject;
 class ViewableObject;
 
@@ -13,7 +12,7 @@ private:
 	std::string m_name;
 	std::string m_display_name;
 	BaseObjectList m_base_objects;
-	GameSectorView* m_game_view;
+	GameSectorViewPtr m_game_view;
 public:
 	GameSector(const std::string& config, XmlResourceManager& xmlmgr);
 
@@ -26,8 +25,8 @@ public:
 	BaseObjectList::iterator begin();
 	BaseObjectList::iterator end();
 
-	void hide(GameSectorView* view);
-	void show(GameSectorView* view);
+	void hide(GameSectorViewPtr view);
+	void show(GameSectorViewPtr view);
 
 	void refresh_viewobject(ViewableObject* object);
 };

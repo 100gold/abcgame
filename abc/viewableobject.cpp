@@ -8,9 +8,7 @@ ViewableObject::ViewableObject(GameSectorPtr sector) :
 	m_pos = Ogre::Vector2(0,0);
 	m_zindex = ZINDEX_DEFAULT;
 
-	std::stringstream objname;
-	objname << std::hex << this;
-	m_viewable_obj_name = objname.str();
+	m_viewable_obj_name = Utl::create_hex_name(this);
 }
 
 void ViewableObject::attach_entity(Ogre::SceneManager* mgr, Ogre::SceneNode* root)

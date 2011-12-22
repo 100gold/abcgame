@@ -2,6 +2,7 @@
 
 #include "exceptions.hpp"
 #include "math.h"
+#include "utl.h"
 #include "eventhandle.hpp"
 #include "zindex.h"
 #include "controlkeys.h"
@@ -11,6 +12,10 @@
 #include "localization.h"
 
 #include "inputgrabber.h"
+
+#include "initogrebase.h"
+#include "mousetracer.h"
+#include "gamesectorview.h"
 
 #include "baseaction.hpp"
 #include "gameturn.h"
@@ -24,8 +29,5 @@
 
 #include "gameworld.h"
 
-#include "moveaction.hpp"
-
-#include "initogrebase.h"
-#include "mousetracer.h"
-#include "gamesectorview.h"
+#include "moveaction.h"
+#include "movecontroller.h"

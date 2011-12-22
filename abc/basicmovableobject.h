@@ -8,6 +8,10 @@ protected:
 public:
 	BasicMovableObject(GameSectorPtr sector);
 
+	const MovementParameterGroup& move_params();
+
 	void move(Ogre::Vector2& v);
 	void abs_move(Ogre::Vector2& v);
+
+	void set_move_vector(Ogre::Vector2& v);
 };

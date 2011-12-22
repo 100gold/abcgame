@@ -2,9 +2,9 @@
 #include "all.h"
 
 GameSector::GameSector(const std::string& config, XmlResourceManager& xmlmgr) :
-	m_name(config),
-	m_game_view(NULL)
+	m_name(config)
 {
+	m_game_view = GameSectorViewPtr();
 	XmlResourcePtr xmlres = xmlmgr.load(config, XML_RESOURCE_GROUP_NAME);
 	m_display_name = Localization::fetch_from_xml(xmlres->getDoc()->root(), "/document/displayname");
 }
@@ -57,9 +57,9 @@ GameSector::BaseObjectList::iterator GameSector::end()
 	return m_base_objects.end();
 }
 
-void GameSector::hide(GameSectorView* view)
+void GameSector::hide(GameSectorViewPtr view)
 {
-	if (m_game_view == view)
+	if (m_game_view.get() == view.get())
 	{
 		std::for_each(begin(), end(), [view](BaseObject* obj){
 			ViewableObject* vo = dynamic_cast<ViewableObject*>(obj);
@@ -68,13 +68,13 @@ void GameSector::hide(GameSectorView* view)
 				view->remove_object(vo);
 			}
 		});
-		m_game_view = NULL;
+		m_game_view = GameSectorViewPtr();
 	}
 }
 
-void GameSector::show(GameSectorView* view)
+void GameSector::show(GameSectorViewPtr view)
 {
-	if (m_game_view == view)
+	if (m_game_view.get() == view.get())
 	{
 		return;
 	}

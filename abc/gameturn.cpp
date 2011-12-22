@@ -1,7 +1,7 @@
 #include "import.h"
 #include "all.h"
 
-GameTurn::EventMgr EventHiveOwner<GameTurn>::m_objevents;
+TurnController::EventMgr EventHiveOwner<GameTurn>::m_objevents;
 
 void GameTurn::do_turn(const Ogre::Real& progress_value)
 {
@@ -19,7 +19,6 @@ void GameTurn::do_turn(const Ogre::Real& progress_value)
 	if (Math::moreeq(progress_value, 1))
 	{
 		m_finished = true;
-		m_objevents.activate(*this);
 	}
 }
 
@@ -33,13 +32,23 @@ GameTurn::GameTurn()
 	m_finished = false;
 }
 
+bool GameTurn::is_finished()
+{
+	return m_finished;
+}
+
 void TurnController::process_turn()
 {
 	if (NULL != m_active_turn)
 	{
+		bool finished_now = !m_active_turn->is_finished();
 		m_active_turn->do_turn(Ogre::Real(m_turn_timer.getMilliseconds())/2000);
-		if (Math::moreeq(Ogre::Real(m_turn_timer.getMilliseconds())/2000,1))
+		if (m_active_turn->is_finished())
 		{
+			if (finished_now)
+			{
+				m_objevents.activate(*m_active_turn);
+			}
 			delete m_active_turn;
 			m_active_turn = NULL;
 		}
@@ -49,18 +58,21 @@ void TurnController::process_turn()
 TurnController::TurnController()
 {
 	m_active_turn = NULL;
+	m_next_turn = new GameTurn();
 }
 
-void TurnController::new_turn()
+void TurnController::start_process()
 {
 	if (NULL != m_active_turn)
 	{
 		throw EInconsistent("new turn before previous completed");
 	}
 
+	BaseObject::nextturn_for_all(*m_next_turn);
+
+	m_active_turn = m_next_turn;
+	m_next_turn = new GameTurn();
 	m_turn_timer.reset();
-	m_active_turn = new GameTurn();
-	BaseObject::nextturn_for_all(*m_active_turn);
 }
 
 bool TurnController::have_active_turn()
@@ -77,7 +89,7 @@ void TurnController::listen_input(InputGrabber& input)
 		{
 			if (!m_r.have_active_turn())
 			{
-				m_r.new_turn();
+				m_r.start_process();
 			}
 		}
 	public:
@@ -87,4 +99,9 @@ void TurnController::listen_input(InputGrabber& input)
 		}
 	};
 	input.inject_listener(new NextTurn(*this));
+}
+
+void TurnController::put_action(ActionPtr act)
+{
+	m_next_turn->put_action(act);
 }

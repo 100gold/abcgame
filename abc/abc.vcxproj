@@ -142,6 +142,8 @@
     <ClCompile Include="gamesector.cpp" />
     <ClCompile Include="math.cpp" />
     <ClCompile Include="mousetracer.cpp" />
+    <ClCompile Include="moveaction.cpp" />
+    <ClCompile Include="movecontroller.cpp" />
     <ClCompile Include="staticgameobject.cpp" />
     <ClCompile Include="testbaseobject.cpp" />
     <ClCompile Include="testbaseview.cpp" />
@@ -150,6 +152,7 @@
     <ClCompile Include="testgameturn.cpp" />
     <ClCompile Include="testmain.cpp" />
     <ClCompile Include="testxmlresource.cpp" />
+    <ClCompile Include="utl.cpp" />
     <ClCompile Include="viewableobject.cpp" />
     <ClCompile Include="xmlresource.cpp" />
   </ItemGroup>
@@ -172,12 +175,14 @@
     <ClInclude Include="inputgrabber.h" />
     <ClInclude Include="localization.h" />
     <ClInclude Include="math.h" />
-    <ClInclude Include="moveaction.hpp" />
+    <ClInclude Include="moveaction.h" />
     <ClInclude Include="mousetracer.h" />
+    <ClInclude Include="movecontroller.h" />
     <ClInclude Include="parametergroups.h" />
     <ClInclude Include="staticgameobject.h" />
     <ClInclude Include="testbaseobjectptr.h" />
     <ClInclude Include="testgameobjectfixture.hpp" />
+    <ClInclude Include="utl.h" />
     <ClInclude Include="viewableobject.h" />
     <ClInclude Include="xmlresource.h" />
     <ClInclude Include="zindex.h" />

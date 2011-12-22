@@ -44,7 +44,7 @@ struct BaseViewFixture
 {
 	TestGameObjectFixture::SectorMap m_map;
 	TestGameObjectFixture* m_stor;
-	TestGameSectorView* test_view;
+	GameSectorViewPtr m_test_view;
 
 	BaseViewFixture()
 	{
@@ -59,11 +59,10 @@ struct BaseViewFixture
 		m_stor = new TestGameObjectFixture(m_map);
 		m_stor->m_ogreroot.initialise();
 
-		test_view = new TestGameSectorView(m_stor->m_ogreroot, m_stor->m_ogreroot.scene_mgr()->getRootSceneNode());
+		m_test_view.reset(new TestGameSectorView(m_stor->m_ogreroot, m_stor->m_ogreroot.scene_mgr()->getRootSceneNode()));
 	}
 	~BaseViewFixture()
 	{
-		delete test_view;
 		delete m_stor;
 	}
 };
@@ -77,8 +76,9 @@ BOOST_AUTO_TEST_CASE(baseview_test0)
 	TestObjectPtr<ViewableObject> obj1 = new TrivialObject(sector1);
 	TestObjectPtr<ViewableObject> obj2 = new TrivialObject(sector1);
 	TestObjectPtr<ViewableObject> obj3 = new TrivialObject(sector1);
+	TestGameSectorView* test_view = static_cast<TestGameSectorView*>(m_test_view.get());
 
-	sector1->show(test_view);
+	sector1->show(m_test_view);
 	BOOST_CHECK(test_view->is_object_present(obj1));
 	BOOST_CHECK(test_view->is_object_present(obj2));
 	BOOST_CHECK(test_view->is_object_present(obj3));
@@ -93,12 +93,12 @@ BOOST_AUTO_TEST_CASE(baseview_test0)
 	BOOST_CHECK(!test_view->is_object_present(obj2));
 	BOOST_CHECK(!test_view->is_object_present(obj3));
 
-	sector2->show(test_view);
+	sector2->show(m_test_view);
 	BOOST_CHECK(test_view->is_object_present(obj1));
 	BOOST_CHECK(test_view->is_object_present(obj2));
 	BOOST_CHECK(test_view->is_object_present(obj3));
 
-	sector1->hide(test_view);
+	sector1->hide(m_test_view);
 	BOOST_CHECK(!test_view->is_object_present(obj1));
 	BOOST_CHECK(test_view->is_object_present(obj2));
 	BOOST_CHECK(test_view->is_object_present(obj3));
@@ -108,7 +108,7 @@ BOOST_AUTO_TEST_CASE(baseview_test0)
 	BOOST_CHECK(!test_view->is_object_present(obj2));
 	BOOST_CHECK(test_view->is_object_present(obj3));
 
-	sector2->hide(test_view);
+	sector2->hide(m_test_view);
 	BOOST_CHECK(!test_view->is_object_present(obj1));
 	BOOST_CHECK(!test_view->is_object_present(obj2));
 	BOOST_CHECK(!test_view->is_object_present(obj3));
