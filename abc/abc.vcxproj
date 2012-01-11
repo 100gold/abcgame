@@ -152,6 +152,7 @@
     <ClCompile Include="testgameturn.cpp" />
     <ClCompile Include="testmain.cpp" />
     <ClCompile Include="testxmlresource.cpp" />
+    <ClCompile Include="timercallback.cpp" />
     <ClCompile Include="utl.cpp" />
     <ClCompile Include="viewableobject.cpp" />
     <ClCompile Include="xmlresource.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="staticgameobject.h" />
     <ClInclude Include="testbaseobjectptr.h" />
     <ClInclude Include="testgameobjectfixture.hpp" />
+    <ClInclude Include="timercallback.h" />
     <ClInclude Include="utl.h" />
     <ClInclude Include="viewableobject.h" />
     <ClInclude Include="xmlresource.h" />

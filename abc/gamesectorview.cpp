@@ -7,7 +7,6 @@ GameSectorView::GameSectorView(OgreBase& base, Ogre::SceneNode* root_node) :
 {
 	create_camera();
 	create_viewport();
-	m_mouse_tracer = new MouseTracer(base.scene_mgr(), m_camera);
 }
 
 void GameSectorView::render()
@@ -16,6 +15,14 @@ void GameSectorView::render()
 	{
 		throw std::logic_error("render error");
 	}
+}
+
+void GameSectorView::new_object_event(ViewableObject* obj)
+{
+}
+
+void GameSectorView::delete_object_event(ViewableObject* obj)
+{
 }
 
 void GameSectorView::update_object(ViewableObject* obj)
@@ -28,7 +35,7 @@ void GameSectorView::update_object(ViewableObject* obj)
 		m_visible_objects.insert(std::make_pair(obj,node));
 		it = m_visible_objects.find(obj);
 
-		m_mouse_tracer->reg_obj(obj->viewable_name(), obj);
+		new_object_event(obj);
 	}
 	it->second->setPosition(it->first->pos().x, it->first->pos().y,it->first->zindex());
 }
@@ -41,8 +48,8 @@ void GameSectorView::remove_object(ViewableObject* obj)
 		return;
 	}
 
-	m_mouse_tracer->unreg_obj(obj->viewable_name());
-
+	delete_object_event(obj);
+	
 	it->second->detachAllObjects();
 	it->second->removeAndDestroyAllChildren();
 	m_root_node->removeAndDestroyChild(obj->viewable_name());
@@ -74,19 +81,8 @@ void GameSectorView::create_viewport()
 
 GameSectorView::~GameSectorView()
 {
-	delete m_mouse_tracer;
 	m_ogrebase.window()->removeViewport(m_viewport->getZOrder());
 	m_ogrebase.scene_mgr()->destroyCamera(m_camera);
-}
-
-void GameSectorView::listen_input(InputGrabber& input_grabber)
-{
-	input_grabber.inject_listener(m_mouse_tracer);
-}
-
-void GameSectorView::set_select_action(SelectActionPtr act)
-{
-	m_mouse_tracer->set_select_action(act);
 }
 
 void GameSectorView::attach_to_object(ViewableObject* obj, Ogre::ManualObject* ent)
@@ -113,3 +109,113 @@ void GameSectorView::detach_from_object(ViewableObject* obj, Ogre::ManualObject*
 	}
 }
 
+
+GameSectorMovableView::GameSectorMovableView(OgreBase& base, Ogre::SceneNode* root_node) :
+	GameSectorView(base, root_node),
+	m_move_event(*this)
+{
+	m_mouse_tracer = new MouseTracer(base.scene_mgr(), m_camera);
+	m_move_x = 0;
+	m_move_y = 0;
+	m_subscribed = false;
+}
+
+GameSectorMovableView::~GameSectorMovableView()
+{
+	delete m_mouse_tracer;
+}
+
+void GameSectorMovableView::new_object_event(ViewableObject* obj)
+{
+	GameSectorView::new_object_event(obj);
+	m_mouse_tracer->reg_obj(obj->viewable_name(), obj);
+}
+
+void GameSectorMovableView::delete_object_event(ViewableObject* obj)
+{
+	m_mouse_tracer->unreg_obj(obj->viewable_name());
+	GameSectorView::delete_object_event(obj);
+}
+
+void GameSectorMovableView::listen_input(InputGrabber& input_grabber)
+{
+	input_grabber.inject_listener(m_mouse_tracer);
+	input_grabber.inject_listener(this);
+}
+
+void GameSectorMovableView::set_select_action(SelectActionPtr act)
+{
+	m_mouse_tracer->set_select_action(act);
+}
+
+void GameSectorMovableView::mouse_moved(const OIS::MouseEvent &e)
+{
+	bool need_to_move = false;
+	if ((1.0*e.state.X.abs)/e.state.width < 0.03)
+	{
+		m_move_x = -1;
+		need_to_move = true;
+	}
+	else if ((1.0*e.state.X.abs)/e.state.width > 0.97)
+	{
+		m_move_x = 1;
+		need_to_move = true;
+	}
+	else
+	{
+		m_move_x = 0;
+	}
+
+	if ((1.0*e.state.Y.abs)/e.state.height < 0.03)
+	{
+		m_move_y = 1;
+		need_to_move = true;
+	}
+	else if ((1.0*e.state.Y.abs)/e.state.height > 0.97)
+	{
+		m_move_y = -1;
+		need_to_move = true;
+	}
+	else
+	{
+		m_move_y = 0;
+	}
+
+	if (need_to_move)
+	{
+		start_moving();
+	}
+	else
+	{
+		stop_moving();
+	}
+}
+
+void GameSectorMovableView::mouse_clicked(const OIS::MouseEvent &e, OIS::MouseButtonID id)
+{
+
+}
+
+void GameSectorMovableView::start_moving()
+{
+	if (!m_subscribed)
+	{
+		m_event_handle = TimerCallbacks::subscribe(m_move_event);
+		m_subscribed = true;
+	}
+}
+
+void GameSectorMovableView::stop_moving()
+{
+	if (m_subscribed)
+	{
+		TimerCallbacks::unsubscribe(m_event_handle);
+		m_subscribed = false;
+	}
+}
+
+void GameSectorMovableView::process_move_screen()
+{
+	/// 10 is size of "screen scrolling step"
+	m_camera->setPosition(m_camera->getPosition() + Ogre::Vector3(m_move_x*25, m_move_y*25, 0));
+}

@@ -10,6 +10,7 @@
 
 #include "xmlresource.h"
 #include "localization.h"
+#include "timercallback.h"
 
 #include "inputgrabber.h"
 

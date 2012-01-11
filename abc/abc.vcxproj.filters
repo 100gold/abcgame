@@ -135,6 +135,9 @@
     <ClCompile Include="utl.cpp">
       <Filter>Source Files\common</Filter>
     </ClCompile>
+    <ClCompile Include="timercallback.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="all.h">
@@ -222,6 +225,9 @@
       <Filter>Header Files\actions</Filter>
     </ClInclude>
     <ClInclude Include="utl.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="timercallback.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
   </ItemGroup>

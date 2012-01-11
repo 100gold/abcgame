@@ -17,6 +17,15 @@ public:
 	}
 };
 
+class ESharedPtrCast : public ERootException
+{
+public:
+	ESharedPtrCast()
+	{
+		m_what = "bad shared_ptr dynamic_cast";
+	}
+};
+
 class ELocalization : public ERootException
 {
 public:

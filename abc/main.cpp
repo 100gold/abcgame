@@ -41,7 +41,7 @@ public:
 
 	void show()
 	{
-		m_view->set_select_action(m_movecontroller.start_control(m_target_obj, m_view));
+		Utl::dynamic_cast_shared_ptr<GameSectorMovableView>(m_view)->set_select_action(m_movecontroller.start_control(m_target_obj, m_view));
 	}
 
 	void operator()(const GameTurn&)
@@ -57,12 +57,12 @@ static void work(OgreBase& ogre_base)
 		XmlResourceManager xml_resmgr;
 		ogre_base.initialise();
 		World world(xml_resmgr);
-		GameSectorViewPtr view(new GameSectorView(ogre_base, ogre_base.scene_mgr()->getRootSceneNode()));;
+		GameSectorViewPtr view(new GameSectorMovableView(ogre_base, ogre_base.scene_mgr()->getRootSceneNode()));;
 
 		InputGrabber input_grabber(ogre_base.window());
 		
 		world.listen_input(input_grabber);
-		view->listen_input(input_grabber);
+		Utl::dynamic_cast_shared_ptr<GameSectorMovableView>(view)->listen_input(input_grabber);
 
 		world.fetch_sector("testsector1.xml")->show(view);
 
@@ -75,6 +75,7 @@ static void work(OgreBase& ogre_base)
 		{
 			world.process_turn();
 			ogre_base.process_message();
+			TimerCallbacks::process_timers();
 
 			input_grabber.capture();
 			view->render();

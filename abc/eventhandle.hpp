@@ -62,17 +62,18 @@ class EventHiveOwner
 {
 public:
 	typedef EventHive<Context> EventMgr;
+	typedef typename EventMgr::EventPtr EventHandle;
 
 protected:
 	static EventMgr m_objevents;
 
 public:
 	template<class Requestor>
-	static typename EventMgr::EventPtr subscribe(Requestor& req)
+	static EventHandle subscribe(Requestor& req)
 	{
 		return m_objevents.make_new_event(req);
 	}
-	static void unsubscribe(typename EventMgr::EventPtr handle)
+	static void unsubscribe(EventHandle handle)
 	{
 		m_objevents.delete_event(handle);
 	}
