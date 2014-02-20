@@ -1,0 +1,465 @@
+<html>
+<head>
+</head>
+<script src="jquery-1.11.0.min.js" type="text/javascript"></script>
+<style>
+#topscreen {
+	position: relative;
+	background-color: #101010;
+	width: 500px;
+	height: 500px;
+} 
+
+#score {
+	position: absolute;
+	left: 80px;
+	color: #e0e0e0;
+}
+
+#stack {
+	position: absolute;
+	left: 150px;
+	top: 50px;
+	width: 1px;
+	height: 1px;
+	border: 3px solid #305030;
+	border-top: 0px;
+}
+
+.block {
+	position: absolute;
+	background-color: red;
+	width: 20px;
+	height: 20px;
+}
+</style>
+<script type="text/javascript">
+
+function UserInput() {
+	var acceptlist = ["Up","Down","Left","Right","Spacebar"];
+	var keystate = new Array();
+	for (i=0;i<acceptlist.length;++i)
+		keystate[acceptlist[i]] = {pressed:false,active:false,removepressed:false};
+
+	$(document).keyup(function(e) {
+		for (i in acceptlist)
+			if (acceptlist[i]==e.key) {
+				e.preventDefault();
+				keystate[e.key].active = false;
+				if (keystate[e.key].removepressed) {
+					keystate[e.key].pressed = false;
+				}
+				break;
+			}
+	});
+	$(document).keydown(function(e) {
+		for (i in acceptlist)
+			if (acceptlist[i]==e.key) {
+				e.preventDefault();
+				keystate[e.key].pressed = true;
+				keystate[e.key].active = true;
+				keystate[e.key].removepressed = false;
+				break;
+			}
+	});
+	
+	this.readinput = function(type) {
+		if (keystate[type].active) {
+			keystate[type].removepressed = true;
+			return true;
+		} else {
+			if (keystate[type].pressed) {
+				keystate[type].pressed = false;
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+}
+
+function ViewBlock(color,sz) {
+	var size = sz;
+	var html = $('<div class="block"></div>');
+	html.css('background-color', color);
+	html.appendTo("#stack");
+	
+	this.updatepos = function(i,j) {
+		html.css('top',i*size);
+		html.css('left',j*size);
+	}
+	
+	this.remove = function() {
+		html.remove();
+	}
+}
+
+function Stack() {
+	this.width = function() { return 12;}
+	this.height = function() { return 20;}
+	this.blocksize = function() { return 20;}
+	this.field = null;
+	
+	this.field = new Array(this.height())
+	for (i=0; i<this.height(); ++i) {
+		this.field[i] = new Array(this.width());
+		for (j=0; j<this.width(); ++j)
+			this.field[i][j]={ type:'void',view:null };
+	}
+	$("#stack").height(this.height()*this.blocksize());
+	$("#stack").width(this.width()*this.blocksize());
+	
+	this.destroyline = function(idx) {
+		//TODO:animate
+		for(j=0;j<this.width();++j) {
+			if (this.field[idx][j].view) {
+				this.field[idx][j].view.remove();
+			}
+		}
+		for(i=idx;i>0;--i) {
+			for(j=0;j<this.width();++j) {
+				this.field[i][j] = this.field[i-1][j];
+				if (this.field[i][j].view)
+					this.field[i][j].view.updatepos(i,j);
+			}
+		}
+	}
+	
+	this.checkline = function() {
+		for (i=this.height()-1;i>=0;--i) {
+			var thislinefilled = true;
+			for (j=0;j<this.width();++j)
+				if (this.field[i][j].type == 'void') {
+					thislinefilled = false;
+					break;
+				}
+			if (thislinefilled) {
+				this.destroyline(i);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	this.store = function(blocks) {
+		for(idx in blocks)
+			this.field[blocks[idx].i][blocks[idx].j] = {
+				type: 'block',
+				view: blocks[idx].html
+			}
+	}
+	
+	this.cleanup = function() {
+		for (i=0; i<this.height(); ++i)
+			for (j=0; j<this.width(); ++j)
+				if (this.field[i][j].view) {
+					this.field[i][j].view.remove();
+					this.field[i][j].view = null;
+					this.field[i][j].type = 'void';
+				}	
+	}
+}
+
+
+function DownBlock(stack, delay) {
+	var blocktypes = new Array();
+	// ..
+	// ..
+	blocktypes['square']      = { model:[{i:0,j:0},{i:1,j:0},{i:0,j:1},{i:1,j:1}], clockwise:'square',      counterclockwise:'square' };
+	// .
+	// ..
+	//  .
+	blocktypes['rblockvert']  = { model:[{i:0,j:0},{i:1,j:0},{i:1,j:1},{i:2,j:1}], clockwise:'rblockhor',   counterclockwise:'rblockhor' };
+	//  ..
+	// ..
+	blocktypes['rblockhor']   = { model:[{i:0,j:1},{i:0,j:2},{i:1,j:1},{i:1,j:0}], clockwise:'rblockvert',  counterclockwise:'rblockvert' };
+	//  .
+	// ..
+	// .
+	blocktypes['lblockvert']  = { model:[{i:0,j:1},{i:1,j:0},{i:1,j:1},{i:2,j:0}], clockwise:'lbockhor',    counterclockwise:'lbockhor' };
+	// ..
+	//  ..
+	blocktypes['lbockhor']    = { model:[{i:0,j:0},{i:0,j:1},{i:1,j:1},{i:1,j:2}], clockwise:'lblockvert',  counterclockwise:'lblockvert' };
+	// ..
+	// .
+	// .
+	blocktypes['rangtop']     = { model:[{i:0,j:0},{i:0,j:1},{i:1,j:0},{i:2,j:0}], clockwise:'ranghor2',    counterclockwise:'ranghor1' };
+	// .
+	// ...
+	blocktypes['ranghor1']    = { model:[{i:0,j:0},{i:1,j:0},{i:1,j:1},{i:1,j:2}], clockwise:'rangtop',     counterclockwise:'rangbottom' };
+	//  .
+	//  .
+	// ..
+	blocktypes['rangbottom']  = { model:[{i:0,j:1},{i:1,j:1},{i:2,j:1},{i:2,j:0}], clockwise:'ranghor1',    counterclockwise:'ranghor2' };
+	// ...
+	//   .
+	blocktypes['ranghor2']    = { model:[{i:0,j:0},{i:0,j:1},{i:0,j:2},{i:1,j:2}], clockwise:'rangbottom',  counterclockwise:'rangtop' };
+	// ..
+	//  .
+	//  .
+	blocktypes['langtop']     = { model:[{i:0,j:0},{i:0,j:1},{i:1,j:1},{i:2,j:1}], clockwise:'langhor2',    counterclockwise:'langhor1' };
+	// ...
+	// .
+	blocktypes['langhor1']    = { model:[{i:0,j:0},{i:1,j:0},{i:0,j:1},{i:0,j:2}], clockwise:'langtop',     counterclockwise:'langbottom' };
+	// .
+	// .
+	// ..
+	blocktypes['langbottom']  = { model:[{i:0,j:0},{i:1,j:0},{i:2,j:0},{i:2,j:1}], clockwise:'langhor1',    counterclockwise:'langhor2' };
+	//   .
+	// ...
+	blocktypes['langhor2']    = { model:[{i:0,j:2},{i:1,j:2},{i:1,j:1},{i:1,j:0}], clockwise:'langbottom',  counterclockwise:'langtop' };
+	// .
+	// .
+	// .
+	// .
+	blocktypes['linevert']    = { model:[{i:0,j:0},{i:1,j:0},{i:2,j:0},{i:3,j:0}], clockwise:'linehor',     counterclockwise:'linehor' };
+	// ....
+	blocktypes['linehor']     = { model:[{i:0,j:0},{i:0,j:1},{i:0,j:2},{i:0,j:3}], clockwise:'linevert',    counterclockwise:'linevert' };
+	//  . 
+	// ...
+	blocktypes['tblockbottom']= { model:[{i:0,j:1},{i:1,j:0},{i:1,j:1},{i:1,j:2}], clockwise:'tblockright', counterclockwise:'tblockleft' };
+	//  .
+	// ..
+	//  .
+	blocktypes['tblockleft']  = { model:[{i:0,j:1},{i:1,j:0},{i:1,j:1},{i:2,j:1}], clockwise:'tblockbottom',counterclockwise:'tblocktop' };
+	// .
+	// ..
+	// .
+	blocktypes['tblockright'] = { model:[{i:0,j:0},{i:1,j:0},{i:1,j:1},{i:2,j:0}], clockwise:'tblocktop',   counterclockwise:'tblockbottom' };
+	// ... 
+	//  .
+	blocktypes['tblocktop']   = { model:[{i:0,j:0},{i:0,j:1},{i:0,j:2},{i:1,j:1}], clockwise:'tblockleft',  counterclockwise:'tblockright' };
+	
+	var startblock = ['linevert','langtop','rangtop', 'rblockvert', 'lblockvert', 'tblockbottom', 'square'];
+	var validcolor = ['red','green','yellow','blue'];
+	
+	this.delay = delay;
+	this.updateview = function() {
+		for(idx=0;idx<this.type.model.length;++idx)
+			this.viewblocks[idx].updatepos(this.i+this.type.model[idx].i,
+				this.j+this.type.model[idx].j);
+	}
+	
+	this.checkpos = function(di,dj,model,stack) {
+		var validpos = true;
+		for (idx=0;idx<model.length;++idx) {
+			var ci = this.i+di+model[idx].i;
+			var cj = this.j+dj+model[idx].j;
+			if (cj<0) {
+				validpos = false;
+				break;
+			}
+			if (cj>=stack.width()) {
+				validpos = false;
+				break;
+			}
+			if (ci<0) {
+				validpos = false;
+				break;
+			}
+			if (ci>=stack.height()) {
+				validpos = false;
+				break;
+			}
+			if (stack.field[ci][cj].type!='void') {
+				validpos = false;
+				break;
+			}
+		}
+		return validpos;
+	}
+	
+	this.moveleft = function(stack) {
+		if (this.checkpos(0,-1,this.type.model,stack)) {
+			this.j--;
+			this.updateview();
+		}
+	}
+	this.moveright = function(stack) {
+		if (this.checkpos(0,1,this.type.model,stack)) {
+			this.j++;
+			this.updateview();
+		}
+	}
+	this.rotclockwise = function(stack) {
+		if (this.checkpos(0,0,blocktypes[this.type.clockwise].model,stack)) {
+			this.type = blocktypes[this.type.clockwise];
+			this.updateview();
+		}
+	}
+	this.rotcounterclockwise = function(stack) {
+		if (this.checkpos(0,0,blocktypes[this.type.counterclockwise].model,stack)) {
+			this.type = blocktypes[this.type.counterclockwise];
+			this.updateview();
+		}
+	}
+	
+	this.trydown = function(stack) {
+		if (this.checkpos(1,0,this.type.model,stack)) {
+			this.i++;
+			this.updateview();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	this.fetchblocks = function() {
+		var blocks = new Array();
+		for (idx=0;idx<this.type.model.length;++idx)
+			blocks.push({
+				i:this.i+this.type.model[idx].i,
+				j:this.j+this.type.model[idx].j,
+				html: this.viewblocks[idx]
+			});
+		return blocks;
+	}
+	
+	this.cleanup = function() {
+		for (idx=0;idx<this.type.model.length;++idx) {
+			if (this.viewblocks[idx]) {
+				this.viewblocks[idx].remove();
+				this.viewblocks[idx] = null;
+			}
+		}
+	}
+	
+	this.i = 0;
+	this.j = stack.width()/2;
+	this.type = blocktypes[startblock[Math.floor(Math.random() * startblock.length)]];
+	this.viewblocks = Array(this.type.model.length);
+	color = validcolor[Math.floor(Math.random() * validcolor.length)];
+	for (idx=0;idx<this.type.model.length;++idx)
+		this.viewblocks[idx] = new ViewBlock(color,stack.blocksize());
+	
+	this.updateview();
+}
+
+function Game() {
+	this.input = new UserInput();
+	this.stack = new Stack();
+	
+	this.score = 0;
+	this.speed = 10;
+	this.linecleared = 0;
+	this.activeblock = new DownBlock(this.stack, this.speed);
+	var playerdelayrotdefault = 8;
+	this.playerdelayrot = playerdelayrotdefault;
+	var playerdelaymovedefault = 1;
+	this.playerdelaymove = playerdelaymovedefault;
+	
+	this.setscore = function(isline) {
+		if (isline) {
+			var k = Math.floor((11-this.speed))*7;
+			this.score += k;
+		} else {
+			var k = Math.floor((11-this.speed)/3)+1;
+			this.score += k*5;
+		}
+		$("#score").html(''+this.score);
+	}
+	
+	this.createnewblock = function() {
+		this.setscore(false);
+		this.stack.store(this.activeblock.fetchblocks());
+		while(this.stack.checkline()) {
+			this.linecleared += 1;
+			this.setscore(true);
+			if (this.linecleared >= (14-this.speed)) {
+				this.linecleared = 0;
+				if (this.speed > 1)
+					this.speed--;
+			}
+		}
+		this.activeblock = new DownBlock(this.stack, this.speed);
+		if (!this.activeblock.checkpos(0,0,this.activeblock.type.model,this.stack)) {
+			this.gameover();
+		}
+	}
+	
+	this.tick = function() {
+		this.playerdelayrot--;
+		if (this.playerdelayrot<=0) {
+			if (this.input.readinput('Up')) {
+				this.activeblock.rotcounterclockwise(this.stack);
+				this.playerdelayrot = playerdelayrotdefault;
+			}
+			if (this.input.readinput('Down')) {
+				this.activeblock.rotclockwise(this.stack);
+				this.playerdelayrot = playerdelayrotdefault;
+			}
+			if (this.input.readinput('Spacebar')) {
+				while(this.activeblock.trydown(this.stack));
+				this.createnewblock();
+				this.playerdelayrot = playerdelayrotdefault;
+			}
+		}
+		this.playerdelaymove--;
+		if (this.playerdelaymove<=0) {
+			if (this.input.readinput('Left')) {
+				this.activeblock.moveleft(this.stack);
+				this.playerdelaymove = playerdelaymovedefault;
+			}
+			if (this.input.readinput('Right')) {
+				this.activeblock.moveright(this.stack);
+				this.playerdelaymove = playerdelaymovedefault;
+			}
+		}
+		
+		this.activeblock.delay--;
+		if (this.activeblock.delay==0) {
+			if (this.activeblock.trydown(this.stack)) {
+				this.activeblock.delay = this.speed;
+			} else {
+				this.createnewblock();
+			}
+		}
+	}
+
+	this.ihandle = null;
+	this.start = function() {
+		var e = this;
+		this.ihandle = setInterval(function() { e.tick.call(e)}, 100);
+	}
+	this.gameover = function() {
+		this.activeblock.cleanup();
+		if (this.ihandle) {
+			clearInterval(this.ihandle);
+			this.ihandle = null;
+		}
+	}
+	this.cleanup = function() {
+		this.stack.cleanup();
+		$("#score").html('0');
+	}
+}
+
+var g_game = null;
+
+$(document).ready(function() {
+	$("#stop").click(function() {
+		if (g_game)
+			g_game.gameover();
+	});
+	$("#start").click(function() {
+		if (g_game) {
+			g_game.gameover();
+			g_game.cleanup();
+		}
+		g_game = new Game();
+		g_game.start();
+	});
+});
+
+</script>
+<body>
+<div id="topscreen">
+	<input type=button id="stop" value="stop"/>
+	<input type=button id="start" value="start"/>
+	<div id="score">0</div>
+	<div id="stack">
+</div>
+</div>
+</body>
+</html>
+ 
